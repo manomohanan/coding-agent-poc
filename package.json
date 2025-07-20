@@ -1,5 +1,23 @@
 {
+  "name": "train-trip-api",
+  "version": "1.0.0",
+  "description": "Train Trip API for retrieving trips between stations",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
   "dependencies": {
-    "@neudesic/inizio-cli": "^1.0.0"
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "helmet": "^7.0.0",
+    "joi": "^17.9.2"
+  },
+  "devDependencies": {
+    "jest": "^29.6.1",
+    "supertest": "^6.3.3",
+    "nodemon": "^3.0.1"
   }
 }
