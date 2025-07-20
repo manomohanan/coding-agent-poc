@@ -43,4 +43,4 @@ jobs:
           npm install -g @neudesic/inizio-cli
 
       - name: Install JavaScript dependencies
-        run: npm ci --legacy-peer-deps
+        run: npm i --legacy-peer-deps
