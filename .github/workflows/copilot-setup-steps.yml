@@ -39,7 +39,7 @@ jobs:
       - name: Install Inizio CLI
         run: |
           npm config set @neudesic:registry https://npm.pkg.github.com/ --global
-          npm config set '//npm.pkg.github.com/:_authToken=' ${{ secrets.INIZIO_READ_TOKEN }} --global
+          npm config set '//npm.pkg.github.com/:_authToken=' ${{ secrets.COPILOT_MCP_INIZIO_READ_TOKEN }} --global
           npm install -g @neudesic/inizio-cli
 
       - name: Install JavaScript dependencies
