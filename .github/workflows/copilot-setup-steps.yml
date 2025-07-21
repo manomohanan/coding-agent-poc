@@ -38,8 +38,6 @@ jobs:
           always-auth: true
           registry-url: "https://npm.pkg.github.com/"
           scope: "@manomohanan"
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # - name: Install Inizio CLI
       #   run: |
