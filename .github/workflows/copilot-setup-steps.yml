@@ -35,6 +35,9 @@ jobs:
         with:
           node-version: "20"
           cache: "npm"
+          always-auth: true
+          registry-url: "https://npm.pkg.github.com/"
+          scope: "@manomohanan"
 
       # - name: Install Inizio CLI
       #   run: |
