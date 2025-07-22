@@ -8,24 +8,32 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import * as OpenApiValidator from 'express-openapi-validator';
+import { OpenAPIV3 } from 'openapi-types';
 import logger from './logger';
 import config from './config';
 
+interface ValidationError {
+  path: string;
+  message: string;
+  errorCode?: string;
+  location?: string;
+}
+
 interface ErrorResponse {
   message: string;
-  errors?: any;
+  errors?: ValidationError[] | string;
 }
 
 interface CustomError extends Error {
   status?: number;
-  errors?: any;
+  errors?: ValidationError[] | string;
 }
 
 class ExpressServer {
   private port: number;
   private app: Application;
   private openApiPath: string;
-  private schema: any;
+  private schema: OpenAPIV3.Document;
   private server?: http.Server;
 
   constructor(port: number, openApiYaml: string) {
@@ -34,7 +42,8 @@ class ExpressServer {
     this.openApiPath = openApiYaml;
     
     try {
-      this.schema = jsYaml.load(fs.readFileSync(openApiYaml, 'utf8'));
+      const yamlContent = jsYaml.load(fs.readFileSync(openApiYaml, 'utf8'));
+      this.schema = yamlContent as OpenAPIV3.Document;
     } catch (e) {
       logger.error('failed to start Express Server', e instanceof Error ? e.message : String(e));
       throw e;
