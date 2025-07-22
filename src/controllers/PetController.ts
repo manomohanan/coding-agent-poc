@@ -1,55 +1,103 @@
 /**
- * The PetController file is a very simple one, which does not need to be changed manually,
- * unless there's a case where business logic routes the request to an entity which is not
- * the service.
- * The heavy lifting of the Controller item is done in Controller.ts - that is where request
- * parameters are extracted and sent to the service, and where response is handled.
+ * The PetController class handles all pet-related HTTP requests.
+ * It uses dependency injection to receive the PetService and directly calls service methods.
  */
 
 import Controller from './Controller';
-import service from '../services/PetService';
-import { OpenApiRequest } from '../types';
+import PetService from '../services/PetService';
+import { OpenApiRequest, ServiceResponse, ServiceError } from '../types';
 import { Response } from 'express';
 
-const addPet = async (request: OpenApiRequest, response: Response): Promise<void> => {
-  await Controller.handleRequest(request, response, service.addPet);
-};
+class PetController extends Controller {
+  private petService: typeof PetService;
 
-const deletePet = async (request: OpenApiRequest, response: Response): Promise<void> => {
-  await Controller.handleRequest(request, response, service.deletePet);
-};
+  constructor(petService: typeof PetService) {
+    super();
+    this.petService = petService;
+  }
 
-const findPetsByStatus = async (request: OpenApiRequest, response: Response): Promise<void> => {
-  await Controller.handleRequest(request, response, service.findPetsByStatus);
-};
+  public async addPet(request: OpenApiRequest, response: Response): Promise<void> {
+    try {
+      const params = this.collectRequestParams(request);
+      const serviceResponse = await this.petService.addPet(params);
+      this.sendResponse(response, serviceResponse);
+    } catch (error) {
+      this.sendError(response, error as ServiceError);
+    }
+  }
 
-const findPetsByTags = async (request: OpenApiRequest, response: Response): Promise<void> => {
-  await Controller.handleRequest(request, response, service.findPetsByTags);
-};
+  public async deletePet(request: OpenApiRequest, response: Response): Promise<void> {
+    try {
+      const params = this.collectRequestParams(request);
+      const serviceResponse = await this.petService.deletePet(params);
+      this.sendResponse(response, serviceResponse);
+    } catch (error) {
+      this.sendError(response, error as ServiceError);
+    }
+  }
 
-const getPetById = async (request: OpenApiRequest, response: Response): Promise<void> => {
-  await Controller.handleRequest(request, response, service.getPetById);
-};
+  public async findPetsByStatus(request: OpenApiRequest, response: Response): Promise<void> {
+    try {
+      const params = this.collectRequestParams(request);
+      const serviceResponse = await this.petService.findPetsByStatus(params);
+      this.sendResponse(response, serviceResponse);
+    } catch (error) {
+      this.sendError(response, error as ServiceError);
+    }
+  }
 
-const updatePet = async (request: OpenApiRequest, response: Response): Promise<void> => {
-  await Controller.handleRequest(request, response, service.updatePet);
-};
+  public async findPetsByTags(request: OpenApiRequest, response: Response): Promise<void> {
+    try {
+      const params = this.collectRequestParams(request);
+      const serviceResponse = await this.petService.findPetsByTags(params);
+      this.sendResponse(response, serviceResponse);
+    } catch (error) {
+      this.sendError(response, error as ServiceError);
+    }
+  }
 
-const updatePetWithForm = async (request: OpenApiRequest, response: Response): Promise<void> => {
-  await Controller.handleRequest(request, response, service.updatePetWithForm);
-};
+  public async getPetById(request: OpenApiRequest, response: Response): Promise<void> {
+    try {
+      const params = this.collectRequestParams(request);
+      const serviceResponse = await this.petService.getPetById(params);
+      this.sendResponse(response, serviceResponse);
+    } catch (error) {
+      this.sendError(response, error as ServiceError);
+    }
+  }
 
-const uploadFile = async (request: OpenApiRequest, response: Response): Promise<void> => {
-  await Controller.handleRequest(request, response, service.uploadFile);
-};
+  public async updatePet(request: OpenApiRequest, response: Response): Promise<void> {
+    try {
+      const params = this.collectRequestParams(request);
+      const serviceResponse = await this.petService.updatePet(params);
+      this.sendResponse(response, serviceResponse);
+    } catch (error) {
+      this.sendError(response, error as ServiceError);
+    }
+  }
 
-export default {
-  addPet,
-  deletePet,
-  findPetsByStatus,
-  findPetsByTags,
-  getPetById,
-  updatePet,
-  updatePetWithForm,
-  uploadFile,
-};
+  public async updatePetWithForm(request: OpenApiRequest, response: Response): Promise<void> {
+    try {
+      const params = this.collectRequestParams(request);
+      const serviceResponse = await this.petService.updatePetWithForm(params);
+      this.sendResponse(response, serviceResponse);
+    } catch (error) {
+      this.sendError(response, error as ServiceError);
+    }
+  }
+
+  public async uploadFile(request: OpenApiRequest, response: Response): Promise<void> {
+    try {
+      const params = this.collectRequestParams(request);
+      const serviceResponse = await this.petService.uploadFile(params);
+      this.sendResponse(response, serviceResponse);
+    } catch (error) {
+      this.sendError(response, error as ServiceError);
+    }
+  }
+}
+
+// Create and export a singleton instance with the service injected
+const petController = new PetController(PetService);
+
+export default petController;

@@ -7,6 +7,7 @@ import logger from '../logger';
 import { ServiceResponse, ServiceError, RequestParams, OpenApiRequest, FileObject } from '../types';
 
 class Controller {
+  // Keep static methods for backward compatibility
   static sendResponse(response: Response, payload: ServiceResponse | any): void {
     /**
      * The default response-code is 200. We want to allow to change that. in That case,
@@ -29,6 +30,15 @@ class Controller {
     } else {
       response.end(error.error || error.message);
     }
+  }
+
+  // Add instance methods for dependency injection pattern
+  protected sendResponse(response: Response, payload: ServiceResponse | any): void {
+    Controller.sendResponse(response, payload);
+  }
+
+  protected sendError(response: Response, error: ServiceError): void {
+    Controller.sendError(response, error);
   }
 
   /**
@@ -57,6 +67,11 @@ class Controller {
     return uploadedFileName;
   }
 
+  // Add instance method for dependency injection pattern
+  protected collectFile(request: OpenApiRequest, fieldName: string): string {
+    return Controller.collectFile(request, fieldName);
+  }
+
   static getRequestBodyName(request: OpenApiRequest): string {
     const codeGenDefinedBodyName = request.openapi.schema['x-codegen-request-body-name'];
     if (codeGenDefinedBodyName !== undefined) {
@@ -71,6 +86,11 @@ class Controller {
       }
     }
     return 'body';
+  }
+
+  // Add instance method for dependency injection pattern
+  protected getRequestBodyName(request: OpenApiRequest): string {
+    return Controller.getRequestBodyName(request);
   }
 
   static collectRequestParams(request: OpenApiRequest): RequestParams {
@@ -107,6 +127,11 @@ class Controller {
     }
     
     return requestParams;
+  }
+
+  // Add instance method for dependency injection pattern
+  protected collectRequestParams(request: OpenApiRequest): RequestParams {
+    return Controller.collectRequestParams(request);
   }
 
   static async handleRequest(

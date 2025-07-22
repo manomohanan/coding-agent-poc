@@ -1,27 +1,63 @@
+/**
+ * The StoreController class handles all store-related HTTP requests.
+ * It uses dependency injection to receive the StoreService and directly calls service methods.
+ */
+
 import Controller from './Controller';
-import service from '../services/StoreService';
-import { OpenApiRequest } from '../types';
+import StoreService from '../services/StoreService';
+import { OpenApiRequest, ServiceError } from '../types';
 import { Response } from 'express';
 
-const deleteOrder = async (request: OpenApiRequest, response: Response): Promise<void> => {
-  await Controller.handleRequest(request, response, service.deleteOrder);
-};
+class StoreController extends Controller {
+  private storeService: typeof StoreService;
 
-const getInventory = async (request: OpenApiRequest, response: Response): Promise<void> => {
-  await Controller.handleRequest(request, response, service.getInventory);
-};
+  constructor(storeService: typeof StoreService) {
+    super();
+    this.storeService = storeService;
+  }
 
-const getOrderById = async (request: OpenApiRequest, response: Response): Promise<void> => {
-  await Controller.handleRequest(request, response, service.getOrderById);
-};
+  public async deleteOrder(request: OpenApiRequest, response: Response): Promise<void> {
+    try {
+      const params = this.collectRequestParams(request);
+      const serviceResponse = await this.storeService.deleteOrder(params);
+      this.sendResponse(response, serviceResponse);
+    } catch (error) {
+      this.sendError(response, error as ServiceError);
+    }
+  }
 
-const placeOrder = async (request: OpenApiRequest, response: Response): Promise<void> => {
-  await Controller.handleRequest(request, response, service.placeOrder);
-};
+  public async getInventory(request: OpenApiRequest, response: Response): Promise<void> {
+    try {
+      const params = this.collectRequestParams(request);
+      const serviceResponse = await this.storeService.getInventory(params);
+      this.sendResponse(response, serviceResponse);
+    } catch (error) {
+      this.sendError(response, error as ServiceError);
+    }
+  }
 
-export default {
-  deleteOrder,
-  getInventory,
-  getOrderById,
-  placeOrder,
-};
+  public async getOrderById(request: OpenApiRequest, response: Response): Promise<void> {
+    try {
+      const params = this.collectRequestParams(request);
+      const serviceResponse = await this.storeService.getOrderById(params);
+      this.sendResponse(response, serviceResponse);
+    } catch (error) {
+      this.sendError(response, error as ServiceError);
+    }
+  }
+
+  public async placeOrder(request: OpenApiRequest, response: Response): Promise<void> {
+    try {
+      const params = this.collectRequestParams(request);
+      const serviceResponse = await this.storeService.placeOrder(params);
+      this.sendResponse(response, serviceResponse);
+    } catch (error) {
+      this.sendError(response, error as ServiceError);
+    }
+  }
+}
+
+// Create and export a singleton instance with the service injected
+const storeController = new StoreController(StoreService);
+
+export default storeController;
