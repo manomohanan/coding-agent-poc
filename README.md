@@ -1,49 +1,74 @@
 
-# Express API Server - Generated from OpenAPI Spec
+# Swagger Petstore - TypeScript Express Server
 
-A complete Express.js API server generated from the Swagger Petstore OpenAPI 3.0 specification.
+A complete TypeScript Express.js API server generated from the Swagger Petstore OpenAPI 3.0 specification.
 
 ## 🚀 Features
 
-- **Complete Express.js API server** with all endpoints from Swagger Petstore
-- **OpenAPI 3.0 validation** using express-openapi-validator
-- **Interactive Swagger UI** documentation
-- **Structured architecture** with controllers and services
-- **RESTful endpoints** with proper HTTP status codes
-- **Mock implementations** ready for business logic integration
+- **Full TypeScript Implementation**: Type-safe API development with comprehensive typing
+- **OpenAPI 3.0 Validation**: Automatic request/response validation using express-openapi-validator
+- **Interactive Documentation**: Swagger UI available at `/api-docs`
+- **Modern Express.js**: Latest Express.js with TypeScript types
+- **Structured Architecture**: Clean separation of controllers, services, and types
+- **Mock Data**: Ready-to-use mock implementations for all endpoints
+- **Type Safety**: Compile-time error checking and enhanced IDE support
 
 ## 📋 API Endpoints
 
 ### Pet Management
-- `POST /api/v3/pet` - Add a new pet to the store
-- `PUT /api/v3/pet` - Update an existing pet
-- `GET /api/v3/pet/findByStatus` - Find pets by status
-- `GET /api/v3/pet/findByTags` - Find pets by tags
-- `GET /api/v3/pet/{petId}` - Find pet by ID
-- `POST /api/v3/pet/{petId}` - Update a pet with form data
-- `DELETE /api/v3/pet/{petId}` - Delete a pet
-- `POST /api/v3/pet/{petId}/uploadImage` - Upload an image
+- `POST /pet` - Add a new pet to the store
+- `PUT /pet` - Update an existing pet
+- `GET /pet/findByStatus` - Find pets by status
+- `GET /pet/findByTags` - Find pets by tags
+- `GET /pet/{petId}` - Find pet by ID
+- `POST /pet/{petId}` - Update a pet with form data
+- `DELETE /pet/{petId}` - Delete a pet
+- `POST /pet/{petId}/uploadImage` - Upload an image
 
 ### Store Operations
-- `GET /api/v3/store/inventory` - Returns pet inventories by status
-- `POST /api/v3/store/order` - Place an order for a pet
-- `GET /api/v3/store/order/{orderId}` - Find purchase order by ID
-- `DELETE /api/v3/store/order/{orderId}` - Delete purchase order by ID
+- `GET /store/inventory` - Returns pet inventories by status
+- `POST /store/order` - Place an order for a pet
+- `GET /store/order/{orderId}` - Find purchase order by ID
+- `DELETE /store/order/{orderId}` - Delete purchase order by ID
 
 ### User Management
-- `POST /api/v3/user` - Create user
-- `POST /api/v3/user/createWithList` - Create list of users with given input array
-- `GET /api/v3/user/login` - Log user into the system
-- `POST /api/v3/user/logout` - Log out current logged in user session
-- `GET /api/v3/user/{username}` - Get user by username
-- `PUT /api/v3/user/{username}` - Update user
-- `DELETE /api/v3/user/{username}` - Delete user
+- `POST /user` - Create user
+- `POST /user/createWithList` - Create list of users with given input array
+- `GET /user/login` - Log user into the system
+- `GET /user/logout` - Log out current logged in user session
+- `GET /user/{username}` - Get user by username
+- `PUT /user/{username}` - Update user
+- `DELETE /user/{username}` - Delete user
+
+## 📁 Project Structure
+
+```
+src/
+├── controllers/          # TypeScript request handlers
+│   ├── Controller.ts     # Base controller with common functionality
+│   ├── PetController.ts  # Pet-related endpoints
+│   ├── StoreController.ts # Store-related endpoints
+│   ├── UserController.ts # User-related endpoints
+│   └── *.ts             # Individual operation handlers
+├── services/             # TypeScript business logic layer
+│   ├── Service.ts       # Base service class
+│   ├── PetService.ts    # Pet business logic with types
+│   ├── StoreService.ts  # Store business logic with types
+│   └── UserService.ts   # User business logic with types
+├── types/               # TypeScript type definitions
+│   └── index.ts         # Shared interfaces and types
+├── config.ts            # Configuration with type safety
+├── logger.ts            # Winston logging configuration
+├── expressServer.ts     # Express server setup
+└── index.ts             # Application entry point
+```
 
 ## 🛠️ Installation & Setup
 
 ### Prerequisites
-- Node.js >= 14.0.0
-- npm >= 6.0.0
+- Node.js >= 16.0.0
+- npm >= 7.0.0
+- TypeScript knowledge (recommended)
 
 ### Quick Start
 
@@ -52,113 +77,160 @@ A complete Express.js API server generated from the Swagger Petstore OpenAPI 3.0
    npm install
    ```
 
-2. **Start the server:**
+2. **Build TypeScript:**
+   ```bash
+   npm run build
+   ```
+
+3. **Start the server:**
    ```bash
    npm start
    ```
 
-3. **Access the API:**
+4. **Development mode (with auto-reload):**
+   ```bash
+   npm run dev
+   ```
+
+5. **Access the API:**
    - API Documentation: http://localhost:8080/api-docs/
    - OpenAPI Spec: http://localhost:8080/openapi
-   - Example endpoint: http://localhost:8080/api/v3/pet/findByStatus?status=available
+   - Health Check: http://localhost:8080/hello
 
-## 📁 Project Structure
+## 🔧 TypeScript Configuration
 
-```
-├── api/                    # OpenAPI specification files
-│   └── openapi.yaml       # Main OpenAPI 3.0 specification
-├── controllers/           # Request handlers
-│   ├── Controller.js      # Base controller with common logic
-│   ├── PetController.js   # Pet-related endpoints
-│   ├── StoreController.js # Store-related endpoints
-│   └── UserController.js  # User-related endpoints
-├── services/              # Business logic layer
-│   ├── Service.js         # Base service utilities
-│   ├── PetService.js      # Pet business logic
-│   ├── StoreService.js    # Store business logic
-│   └── UserService.js     # User business logic
-├── utils/                 # Utility modules
-│   └── openapiRouter.js   # OpenAPI routing logic
-├── config.js              # Server configuration
-├── expressServer.js       # Express server setup
-├── index.js               # Application entry point
-├── logger.js              # Winston logger configuration
-└── package.json           # Dependencies and scripts
+The project uses modern TypeScript configuration with strict type checking:
+
+```typescript
+// tsconfig.json highlights
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "declaration": true,
+    "sourceMap": true
+  }
+}
 ```
 
-## 🔧 Configuration
-
-Server configuration can be modified in `config.js`:
-
-- **Port**: Default 8080
-- **OpenAPI Spec**: `api/openapi.yaml`
-- **Upload Directory**: `uploaded_files/`
-- **CORS**: Enabled for all origins
-
-## 🧪 Testing
-
-The server includes mock implementations for all endpoints. Each endpoint returns:
-- **200 OK** with sample data for successful requests
-- **400/404/422** for validation errors and not found cases
-- Request validation against the OpenAPI schema
+## 🧪 Testing & Usage
 
 ### Sample API Calls
 
 ```bash
+# Health check
+curl http://localhost:8080/hello
+
 # Get pets by status
-curl "http://localhost:8080/api/v3/pet/findByStatus?status=available"
+curl "http://localhost:8080/pet/findByStatus?status=available"
 
-# Get store inventory
-curl "http://localhost:8080/api/v3/store/inventory"
+# Get store inventory (requires api_key header)
+curl -H "api_key: test" "http://localhost:8080/store/inventory"
 
-# Create a new pet (with proper JSON)
-curl -X POST "http://localhost:8080/api/v3/pet" \
+# Get pet by ID
+curl "http://localhost:8080/pet/1"
+
+# Create a new pet
+curl -X POST "http://localhost:8080/pet" \
   -H "Content-Type: application/json" \
   -d '{
-    "name": "doggie",
+    "name": "Buddy",
     "photoUrls": ["https://example.com/photo.jpg"],
     "status": "available"
   }'
+
+# User login
+curl "http://localhost:8080/user/login?username=test&password=test"
+```
+
+## 💡 TypeScript Benefits
+
+1. **Type Safety**: All request/response objects are strongly typed
+2. **Better IDE Support**: Enhanced autocomplete, refactoring, and error detection
+3. **Compile-time Validation**: Catch errors before runtime
+4. **Self-documenting Code**: Types serve as inline documentation
+5. **Easier Refactoring**: Safe code changes with compile-time verification
+6. **Enhanced Developer Experience**: Better debugging and development tools
+
+## 🔐 Security & Validation
+
+- **Request Validation**: Automatic validation against OpenAPI schema
+- **Type Safety**: TypeScript prevents type-related runtime errors
+- **Error Handling**: Comprehensive error responses with proper status codes
+- **Input Sanitization**: Built-in protection against malformed requests
+
+## 🚦 Development
+
+### Adding New Features
+
+1. **Update OpenAPI Spec**: Modify `openapi.yaml` for new endpoints
+2. **Update Types**: Add new interfaces in `src/types/index.ts`
+3. **Add Service Logic**: Implement business logic in appropriate service files
+4. **Add Controllers**: Create controller methods for new endpoints
+5. **Create Operation Handlers**: Add individual handler files for new operations
+6. **Build & Test**: Run `npm run build` and test the endpoints
+
+### Available Scripts
+
+- `npm run build` - Compile TypeScript to JavaScript
+- `npm start` - Build and start the production server
+- `npm run dev` - Start development server with auto-reload
+- `npm run prestart` - Install dependencies (runs automatically)
+
+### TypeScript Development Workflow
+
+```bash
+# Watch mode for continuous compilation
+npx tsc --watch
+
+# Development with auto-reload
+npm run dev
+
+# Type checking only
+npx tsc --noEmit
+
+# Build for production
+npm run build
 ```
 
 ## 📚 API Documentation
 
-- **Interactive Swagger UI**: Visit http://localhost:8080/api-docs/ for full API documentation
-- **OpenAPI Spec**: Download the spec from http://localhost:8080/openapi
-- **Postman Collection**: Import the OpenAPI spec into Postman for testing
+- **Interactive Swagger UI**: http://localhost:8080/api-docs/
+- **OpenAPI Specification**: http://localhost:8080/openapi
+- **TypeScript Types**: Generated from OpenAPI schema with full type safety
 
-## 🔐 Security
+## 🏗️ Architecture
 
-The API includes security configurations for:
-- OAuth2 authentication (petstore_auth)
-- API key authentication
-- Request validation and sanitization
-
-## 🚦 Development
-
-### Adding Business Logic
-
-1. **Controllers**: Handle HTTP requests and responses in `controllers/`
-2. **Services**: Implement business logic in `services/`
-3. **Models**: Define data models based on OpenAPI schemas
-
-### Customization
-
-The generated code is designed to be customized:
-- Controllers extract request parameters and delegate to services
-- Services contain placeholder implementations ready for your business logic
-- The OpenAPI spec can be modified and regenerated as needed
-
-## 📝 Scripts
-
-- `npm start` - Start the production server
-- `npm run prestart` - Install dependencies (runs automatically)
+```mermaid
+graph TD
+    A[Client Request] --> B[Express Server - TypeScript]
+    B --> C[OpenAPI Validator]
+    C --> D[Operation Handler]
+    D --> E[Controller Layer - TS]
+    E --> F[Service Layer - TS]
+    
+    subgraph "Type Safety"
+        G[Request Types]
+        H[Response Types]
+        I[Service Types]
+    end
+    
+    G --> E
+    H --> E
+    I --> F
+    
+    J[TypeScript Compiler] --> B
+    K[OpenAPI Spec] --> C
+```
 
 ## 🤝 Generated from OpenAPI
 
-This server was generated using OpenAPI Generator from the official Swagger Petstore specification:
+This TypeScript server was generated and converted from the official Swagger Petstore specification:
 - **Source**: https://github.com/swagger-api/swagger-petstore
-- **Generator**: nodejs-express-server
+- **Generator**: nodejs-express-server (converted to TypeScript)
 - **OpenAPI Version**: 3.0.4
+- **Language**: TypeScript with full type safety
 
-The generated code follows OpenAPI best practices and is ready for production use with custom business logic implementation.
+The implementation follows OpenAPI best practices and TypeScript conventions, ready for production use with custom business logic implementation.
