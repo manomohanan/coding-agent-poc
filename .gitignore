@@ -1,0 +1,52 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.docstates
+*.tmp
+*.log
+
+# Visual Studio
+.vs/
+*.vssscc
+*.vspscc
+$tf/
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+bld/
+[Bb]in/
+[Oo]bj/
+
+# NuGet
+packages/
+*.nupkg
+*.snupkg
+.nuget/
+
+# Node.js
+node_modules/
+npm-debug.log*
+
+# Docker
+Dockerfile.tmp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Generated files
+*.dll
+*.exe
+*.pdb
